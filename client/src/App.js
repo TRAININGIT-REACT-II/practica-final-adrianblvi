@@ -1,27 +1,57 @@
 import { useEffect, useState } from "react";
-import Status from "./components/Status";
+import Theme from "./contexts/theme";
+import { THEMES } from "./constants/themes";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
+// Vistas importadas
+import ThemeToggle from "./components/ThemeToggle";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Notes from "./components/NewNote";
+import NavBar from "./components/NavBar";
+import NotFound from "./components/NotFound";
 
 // Componente principal de la aplicación.
 const App = () => {
-  const [status, setStatus] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  // Cargamos el estado del servidor
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status === "ok"))
-      .finally(() => setLoading(false));
-  }, []);
+  const [theme, setTheme] = useState(THEMES.light);
 
   // Mostramos la aplicación
+
   return (
     <main>
-      <h1>Curso de React de TrainingIT</h1>
-      <p>
-        Estado del servidor:
-        {loading ? " Cargando..." : <Status status={status} />}
-      </p>
+      <Router>
+        <Theme.Provider value={{ current: theme, update: setTheme }}>
+          <NavBar />
+          <Switch>
+            <Route path="/" exact>
+              <h1>TRAINNING NOTES</h1>
+              <ThemeToggle />
+              <button className="btn btn-secondary">
+                {" "}
+                <Link to="/notes"> Ver notas</Link>{" "}
+              </button>
+              <p>
+                <Link to="/login">Iniciar sesión</Link>
+              </p>
+              <p>
+                <Link to="/signup">Registarse</Link>
+              </p>
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/notes">
+              <Notes />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </Theme.Provider>
+      </Router>
     </main>
   );
 };
