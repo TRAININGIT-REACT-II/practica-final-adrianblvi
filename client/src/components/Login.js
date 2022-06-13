@@ -1,8 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../static/css/login.css";
+import { LOGIN_STATE } from "../constants/loginState";
 
 const Login = () => {
-  return <h2>Login</h2>;
+  const [formState, setFormState] = useState(LOGIN_STATE);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    fetch("/api/login", {
+      method: "POST",
+
+      body: JSON.stringify({
+        username: formState.username,
+        password: formState.password,
+      }),
+      // Modificamos la cabecera
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      // Obtenemos la respuesta
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.error(err));
+  };
+
+  const onChange = (key) => {
+    return (e) =>
+      setFormState({
+        ...formState,
+        [key]: e.target.value,
+      });
+  };
+
+  return (
+    <form className="login" onSubmit={onSubmit}> 
+       <label htmlFor="username">Usuario</label>
+      <input
+        id="username"
+        type="text"
+        required={true}
+        value={formState.username}
+        onChange={onChange("username")}
+      />
+      <label htmlFor="password">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        required={true}
+        value={formState.password}
+        onChange={onChange("password")}
+      />
+      <button>Iniciar sesión</button>
+    </form>
+  );
 };
 
 export default Login;
