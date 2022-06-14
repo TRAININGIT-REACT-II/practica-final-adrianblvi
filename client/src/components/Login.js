@@ -1,9 +1,28 @@
-import React, { useState } from "react";
-import "../../static/css/login.css";
+import React, { useState, useContext, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { LOGIN_STATE } from "../constants/loginState";
+import SesionAlert from "./Alerts/SesionAlert";
+import LoginAlert from "./Alerts/LoginAlert";
+import UserContext from "../contexts/userContext";
+import "../../static/css/login.css";
 
 const Login = () => {
+  const history = useHistory();
+
+  const user = useContext(UserContext);
+
+  const { state } = useLocation();
+  const displayAlert = state && state.msg != null && !user.signedIn;
+
   const [formState, setFormState] = useState(LOGIN_STATE);
+  const [msgError, setMsgError] = useState(null);
+  const [showError, setShowError] = useState(true);
+
+  useEffect(() => {
+    const error = showError ? false : true;
+    setShowError(error);
+    console.log("UEF:Mensaje de error: " + msgError);
+  }, [msgError]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -22,8 +41,18 @@ const Login = () => {
     })
       // Obtenemos la respuesta
       .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.error(err));
+      .then((json) => {
+        if (json.error) {
+          setMsgError("Usuario o contraseña incorrectos");
+        } else {
+          console.log(json);
+          user.updateUser(true);
+          history.push("/notes");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const onChange = (key) => {
@@ -35,8 +64,10 @@ const Login = () => {
   };
 
   return (
-    <form className="login" onSubmit={onSubmit}> 
-       <label htmlFor="username">Usuario</label>
+    <form className="login" onSubmit={onSubmit}>
+      {displayAlert && <SesionAlert msg={state.msg} />}
+      {showError && <LoginAlert msg={msgError} />}
+      <label htmlFor="username">Usuario</label>
       <input
         id="username"
         type="text"
