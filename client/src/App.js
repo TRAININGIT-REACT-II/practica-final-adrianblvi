@@ -4,8 +4,11 @@ import { THEMES } from "./constants/themes";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 // Vistas importadas
-
+import ThemeToggle from "./components/ThemeToggle";
+import Login from "./components/Authentication/Login";
+import Signup from "./components/Authentication/Signup";
 import NotFound from "./components/NotFound";
+import NotesList from "./components/Note/NotesList";
 import NoteLayoutChange from "./components/Note/NoteLayout";
 import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
@@ -23,14 +26,20 @@ const App = () => {
           <NavBar />
           <Switch>
             <Route path="/" exact>
-              {/* <NoteLayoutChange /> */}
+              <NoteLayoutChange />
               <button className="btn btn-secondary">
                 {" "}
                 <Link to="/notes"> Ver notas</Link>{" "}
               </button>
             </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
             <PrivateRoute path="/notes">
-              <NoteLayoutChange />
+              <NotesList />
             </PrivateRoute>
             {/* <Route path="/notes">
               <NotesList />
