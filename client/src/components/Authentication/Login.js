@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { LOGIN_STATE } from "../constants/loginState";
-import SesionAlert from "./Alerts/SesionAlert";
-import LoginAlert from "./Alerts/LoginAlert";
-import UserContext from "../contexts/userContext";
-import "../../static/css/login.css";
+import { LOGIN_STATE } from "../../constants/loginState";
+import LoginAlert from "../Alerts/LoginAlert";
+import SesionAlert from "../Alerts/SesionAlert";
+import UserContext from "../../contexts/userContext";
+import NameContext from "../../contexts/nameContext";
+import "../../../static/css/login.css";
 
 const Login = () => {
   const history = useHistory();
 
   const user = useContext(UserContext);
+  const name = useContext(NameContext);
 
   const { state } = useLocation();
   const displayAlert = state && state.msg != null && !user.signedIn;
@@ -47,6 +49,7 @@ const Login = () => {
         } else {
           console.log(json);
           user.updateUser(true);
+          name.updateName(json.name);
           history.push("/notes");
         }
       })

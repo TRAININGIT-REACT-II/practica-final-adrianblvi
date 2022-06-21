@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { THEMES } from "../constants/themes";
 import Theme from "../contexts/theme";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 const ThemeToggle = () => {
   const theme = useContext(Theme);

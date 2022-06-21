@@ -1,11 +1,8 @@
 import { createContext } from "react";
 
 const UserContext = createContext({
-    signedIn: false,
-    name: '',
-
-    updateUser : () => {},
+  signedIn: true,
+  updateUser: () => {},
 });
-
 
 export default UserContext;

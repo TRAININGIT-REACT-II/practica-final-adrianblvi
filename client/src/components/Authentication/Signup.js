@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import "../../static/css/login.css";
-import { LOGIN_STATE } from "../constants/loginState";
+import { LOGIN_STATE } from "../../constants/loginState";
+import UserContext from "../../contexts/userContext";
+import LoginAlert from "../Alerts/LoginAlert";
+import "../../../static/css/login.css";
 
 const Signup = () => {
   const [formState, setFormState] = useState(LOGIN_STATE);
+  const [msgError, setMsgError] = useState(null);
+  const [showError, setShowError] = useState(true);
 
   const history = useHistory();
+
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    const error = showError ? false : true;
+    setShowError(error);
+    console.log("UEF:Mensaje de error: " + msgError);
+  }, [msgError]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -18,18 +30,26 @@ const Signup = () => {
         username: formState.username,
         password: formState.password,
       }),
-      // Modificamos la cabecera
+
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      // Obtenemos la respuesta
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        history.push("/");
+        if (json.error) {
+          setMsgError("Usuario ya registrado en el sistema");
+        } else {
+          console.log(json);
+          user.updateUser(true);
+          history.push("/notes");
+        }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+      });
+
+    history.push("/notes");
   };
 
   const onChange = (key) => {
@@ -42,6 +62,7 @@ const Signup = () => {
 
   return (
     <form className="login" onSubmit={onSubmit}>
+      {showError && <LoginAlert msg={msgError} />}
       <label htmlFor="username">Usuario</label>
       <input
         id="username"
