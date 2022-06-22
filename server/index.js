@@ -231,11 +231,14 @@ fastify.route({
     // Obtenemos el usuario
     const { id: userId } = request.user;
     const { title, content } = request.body;
+    const date = new Date();
 
     const newPost = {
       author: userId,
       title,
       content,
+      createdAt: date,
+      updatedAt: date,
       id: nanoid(NOTE_ID_LENGTH),
     };
 
@@ -274,7 +277,7 @@ fastify.route({
       // Actualizamos
       db.get("notes")
         .find({ author: userId, id })
-        .assign({ title, content })
+        .assign({ title, content, updatedAt: new Date() })
         .write();
 
       return {
