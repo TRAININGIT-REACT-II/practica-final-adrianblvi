@@ -19,7 +19,12 @@ const pages = [""];
 
 const NavBar = () => {
   const { signedIn } = useContext(UserContext);
+
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const render = signedIn ? <SignedIn /> : <NotSignedIn />;
+
+  const style = { backgroundColor: "rgba(2, 128, 144, 0.2)" };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -29,8 +34,8 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  const render = signedIn ? <SignedIn /> : <NotSignedIn />;
-  const style = { backgroundColor: "rgba(2, 128, 144, 0.2)" };
+  console.log("Is signed in: " + signedIn);
+
   return (
     <AppBar position="static" style={style}>
       <Container maxWidth="xl">

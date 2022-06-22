@@ -50,7 +50,8 @@ const Login = () => {
           console.log(json);
           user.updateUser(true);
           name.updateName(json.name);
-          history.push("/notes");
+          localStorage.setItem("user", json.token);
+          history.push("/");
         }
       })
       .catch((err) => {

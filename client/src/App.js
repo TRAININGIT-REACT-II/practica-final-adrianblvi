@@ -1,36 +1,37 @@
-import { useEffect, useState } from "react";
-import Theme from "./contexts/theme";
-import { THEMES } from "./constants/themes";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 // Vistas importadas
-import ThemeToggle from "./components/ThemeToggle";
 import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
 import NotFound from "./components/NotFound";
-import NotesList from "./components/Note/NotesList";
 import NoteLayoutChange from "./components/Note/NoteLayout";
+import NewNote from "./components/Note/NewNote";
 import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
+import UserContext from "./contexts/userContext";
 
 // Componente principal de la aplicación.
 const App = () => {
-  const [theme, setTheme] = useState(THEMES.light);
+  const sessionActive = localStorage.getItem("user") === null ? false : true;
+
+  const [signedIn, setSignedIn] = useState(sessionActive);
 
   // Mostramos la aplicación
 
   return (
     <main>
-      <Router>
-        <Theme.Provider value={{ current: theme, update: setTheme }}>
+      <UserContext.Provider
+        value={{ signedIn: signedIn, updateUser: setSignedIn }}
+      >
+        <Router>
           <NavBar />
           <Switch>
-            <Route path="/" exact>
+            <PrivateRoute path="/" exact>
               <NoteLayoutChange />
-              <button className="btn btn-secondary">
-                {" "}
-                <Link to="/notes"> Ver notas</Link>{" "}
-              </button>
+            </PrivateRoute>
+            <Route path="/new">
+              <NewNote />
             </Route>
             <Route path="/login">
               <Login />
@@ -38,18 +39,12 @@ const App = () => {
             <Route path="/signup">
               <Signup />
             </Route>
-            <PrivateRoute path="/notes">
-              <NotesList />
-            </PrivateRoute>
-            {/* <Route path="/notes">
-              <NotesList />
-            </Route> */}
             <Route path="*">
               <NotFound />
             </Route>
           </Switch>
-        </Theme.Provider>
-      </Router>
+        </Router>
+      </UserContext.Provider>
     </main>
   );
 };

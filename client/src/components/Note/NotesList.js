@@ -28,13 +28,11 @@ const NotesList = () => {
 
   return (
     <div className="notes-app">
-      <div id="mount-point">
-        <h2 className="app-header">Notas: 5</h2>
-        <button onClick={handleAddNote}>Add note</button>
-        <Route path="/notes/new">
-          <NewNote />
-        </Route>
-      </div>
+      <h2 className="app-header">Notas: 5</h2>
+      <button onClick={handleAddNote}>Add note</button>
+      <Route path="/notes/new">
+        <NewNote />
+      </Route>
     </div>
   );
 };

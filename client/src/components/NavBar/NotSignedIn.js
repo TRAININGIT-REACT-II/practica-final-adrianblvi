@@ -1,11 +1,18 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
 const NotSignedIn = () => {
-  const handleIniciarSesion = () => {};
+  const history = useHistory();
 
-  const handleRegistrarse = () => {};
+  const handleIniciarSesion = () => {
+    history.push("/login");
+  };
+
+  const handleRegistrarse = () => {
+    history.push("/signup");
+  };
 
   return (
     <Box>

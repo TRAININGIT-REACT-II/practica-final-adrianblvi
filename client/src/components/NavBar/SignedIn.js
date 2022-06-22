@@ -10,11 +10,14 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import UserContext from "../../contexts/userContext";
 import NameContext from "../../contexts/nameContext";
 import AuthService from "../../services/authService";
 
 const SignedIn = () => {
-  const { name } = useContext(NameContext);
+  // const { name } = useContext(NameContext);
+  const name = "Adrian";
+  const user = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const history = useHistory();
   const handleOpenUserMenu = (event) => {
@@ -28,6 +31,7 @@ const SignedIn = () => {
   const handleLogout = () => {
     console.log("logout");
     AuthService.logout();
+    user.updateUser(false);
     history.push("/login");
   };
 
