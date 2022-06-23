@@ -23,8 +23,14 @@ const Login = () => {
   useEffect(() => {
     const error = showError ? false : true;
     setShowError(error);
-    console.log("UEF:Mensaje de error: " + msgError);
   }, [msgError]);
+
+  console.log("DisplayAlert: " + displayAlert);
+  console.log("Msg Error " + msgError);
+  console.log("Show Error " + showError);
+  if (state!= null) {
+    console.log("State: " + state.msg);
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Route, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { NOTES_LAYOUT } from "../../constants/notesLayout";
 import NoteLayout from "../../contexts/noteLayout";
 
@@ -14,12 +14,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 import "../../../static/css/note.css";
-import MoreVertOutlined from "@mui/icons-material/MoreVertOutlined";
 
 const ToggleNoteLayout = () => {
   const [alignment, setAlignment] = useState("center");
 
-  const history = useHistory();
+  let history = useHistory();
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment != null) {

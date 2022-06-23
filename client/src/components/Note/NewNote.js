@@ -7,12 +7,11 @@ import "../../../static/css/note.css";
 
 const NewNote = () => {
   // const match = useRouteMatch();
-  // const history = useHistory();
+  let history = useHistory();
 
   const [note, setNote] = useState(NOTE_STATE);
   const style = {
-    "justifyContent": "center",
-    // "align-items": "center",
+    justifyContent: "center",
     width: "100%",
     height: "100%",
   };
@@ -26,7 +25,7 @@ const NewNote = () => {
   };
 
   const onClick = () => {
-    history.back();
+    history.goBack();
   };
 
   const handleNoteAdd = () => {
@@ -47,7 +46,7 @@ const NewNote = () => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        history.push("/notes");
+        history.push("/");
       })
       .catch((err) => {
         console.error(err);
