@@ -25,13 +25,6 @@ const Login = () => {
     setShowError(error);
   }, [msgError]);
 
-  console.log("DisplayAlert: " + displayAlert);
-  console.log("Msg Error " + msgError);
-  console.log("Show Error " + showError);
-  if (state!= null) {
-    console.log("State: " + state.msg);
-  }
-
   const onSubmit = (e) => {
     e.preventDefault();
 

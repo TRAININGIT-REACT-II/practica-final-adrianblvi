@@ -42,14 +42,14 @@ const Signup = () => {
         } else {
           console.log(json);
           user.updateUser(true);
-          history.push("/notes");
+          history.push("/");
         }
       })
       .catch((err) => {
         console.error(err);
       });
 
-    history.push("/notes");
+    history.push("/");
   };
 
   const onChange = (key) => {

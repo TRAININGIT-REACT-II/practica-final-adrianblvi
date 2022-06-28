@@ -29,7 +29,6 @@ const SignedIn = () => {
   };
 
   const handleLogout = () => {
-    console.log("logout");
     AuthService.logout();
     user.updateUser(false);
     history.push("/login");

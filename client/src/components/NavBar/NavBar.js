@@ -34,8 +34,6 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  console.log("Is signed in: " + signedIn);
-
   return (
     <AppBar position="static" style={style}>
       <Container maxWidth="xl">
