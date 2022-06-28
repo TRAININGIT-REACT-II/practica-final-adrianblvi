@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -11,36 +12,19 @@ import { format, parseISO } from "date-fns";
 import AuthService from "../../services/authService";
 import "../../../static/css/note.css";
 
-const CardNote = ({ note }) => {
+const CardNote = ({ note, onClick }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
 
   const openModal = () => setShowModal(true);
+
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const confirmModal = () => {
-    closeModal();
-
-    // fetch("/api/notes/" + note.id, {
-    //   method: "DELETE",
-
-    //   headers: {
-    //     "api-token": AuthService.getCurrentUser(),
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     if (json.error) {
-    //       console.log(json.error);
-    //     }
-    //     console.log(onDelete);
-    //     onDelete;
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+  const editNote = () => {
+    history.push("/" + note.id, { note: note });
   };
 
   const date = format(parseISO(note.createdAt), "dd/MM/yyyy");
@@ -50,7 +34,7 @@ const CardNote = ({ note }) => {
     details.length > 200 ? details.slice(0, 200) + "  ..." : details;
   const detailsToShow = showDetails ? details : detailsSliced;
 
-  const onClick = () => {
+  const handleShowDetails = () => {
     setShowDetails(!showDetails);
   };
 
@@ -60,7 +44,7 @@ const CardNote = ({ note }) => {
         <CardHeader
           action={
             <div>
-              <IconButton onClick={() => console.log("Editing Note")}>
+              <IconButton onClick={editNote}>
                 <CreateOutlinedIcon />
               </IconButton>
 
@@ -70,16 +54,15 @@ const CardNote = ({ note }) => {
             </div>
           }
           title={note.title}
-          // subheader="September 14, 2016"
           subheader={date}
         />
         <DeleteNoteDialog
           show={showModal}
           onClose={closeModal}
-          onClick={confirmModal}
+          onClick={onClick}
         />
         <CardContent>
-          <div onClick={onClick}>
+          <div onClick={handleShowDetails}>
             <Typography variant="body2" color="textSecondary">
               {detailsToShow}
             </Typography>

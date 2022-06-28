@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { NOTE_STATE } from "../../constants/noteState";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import AuthService from "../../services/authService";
@@ -36,13 +36,12 @@ const NewNote = () => {
         title: note.title,
         content: note.content,
       }),
-      // Modificamos la cabecera
+
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         "api-token": AuthService.getCurrentUser(),
       },
     })
-      // Obtenemos la respuesta
       .then((res) => res.json())
       .then((json) => {
         console.log(json);

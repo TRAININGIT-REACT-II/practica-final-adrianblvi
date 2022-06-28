@@ -33,6 +33,9 @@ const App = () => {
             <Route path="/new">
               <NewNote />
             </Route>
+            {/* <Route path="/:name([a-zA-Z]*">
+              <NewNote />
+            </Route> */}
             <Route path="/login">
               <Login />
             </Route>
