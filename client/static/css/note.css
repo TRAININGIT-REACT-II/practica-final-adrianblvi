@@ -75,7 +75,8 @@ textarea {
 
 .note-editor {
   width: 100%;
-  max-width: 600px;
+  height: 100%;
+  max-width: 650px;
   padding: 16px;
   margin: 16px auto;
   background-color: white;
@@ -108,7 +109,7 @@ textarea {
 
 .textarea {
   width: 100%;
-  resize: none;
+  resize: vertical;
   margin: 5px;
   font-size: 14px;
   border: none;
@@ -210,39 +211,56 @@ textarea {
 }
 
 .text {
-  font-size:28px;
-  font-family:helvetica;
-  font-weight:bold;
-  color:#71d90b;
-  text-transform:uppercase;
+  font-size: 28px;
+  font-family: helvetica;
+  font-weight: bold;
+  color: #71d90b;
+  text-transform: uppercase;
 }
 .parpadea {
-  
   animation-name: parpadeo;
   animation-duration: 1s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 
-  -webkit-animation-name:parpadeo;
+  -webkit-animation-name: parpadeo;
   -webkit-animation-duration: 1s;
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
 }
 
-@-moz-keyframes parpadeo{  
-  0% { opacity: 1.0; }
-  50% { opacity: 0.0; }
-  100% { opacity: 1.0; }
+@-moz-keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-@-webkit-keyframes parpadeo {  
-  0% { opacity: 1.0; }
-  50% { opacity: 0.0; }
-   100% { opacity: 1.0; }
+@-webkit-keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-@keyframes parpadeo {  
-  0% { opacity: 1.0; }
-   50% { opacity: 0.0; }
-  100% { opacity: 1.0; }
+@keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

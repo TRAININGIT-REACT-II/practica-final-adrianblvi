@@ -1,20 +1,41 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { NOTE_STATE } from "../../constants/noteState";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import AuthService from "../../services/authService";
 import "../../../static/css/note.css";
 
 const NewNote = () => {
-  // const match = useRouteMatch();
-  let history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
+  const { id } = useParams();
+
+  const noteReceived =
+    location.state === undefined ? undefined : location.state.note;
 
   const [note, setNote] = useState(NOTE_STATE);
+  const [editing, setEditing] = useState(false);
+
+  const buttonText = editing ? "Guardar" : "Añadir";
+
   const style = {
     justifyContent: "center",
     width: "100%",
     height: "100%",
   };
+
+  useEffect(() => {
+    if (noteReceived === undefined) {
+      console.log("nueva nota");
+    } else {
+      if (id === noteReceived.id) {
+        console.log("Editando nota");
+        setEditing(true);
+        setNote(noteReceived);
+      }
+    }
+  }, []);
 
   const onChange = (key) => {
     return (e) =>
@@ -29,8 +50,21 @@ const NewNote = () => {
   };
 
   const handleNoteAdd = () => {
-    fetch("/api/notes", {
-      method: "POST",
+    let url = "";
+    let method = "";
+
+    if (editing) {
+      // seteamos url y method para realizar petición PUT
+      url = "/api/notes/" + note.id;
+      method = "PUT";
+    } else {
+      // seteamos url y method para realizar petición POST
+      url = "/api/notes";
+      method = "POST";
+    }
+
+    fetch(url, {
+      method: method,
 
       body: JSON.stringify({
         title: note.title,
@@ -66,17 +100,17 @@ const NewNote = () => {
           <CloseOutlinedIcon onClick={onClick} fontSize="small" />
         </div>
         <hr />
-        <textarea
+
+        <TextareaAutosize
           placeholder="Enter your note here..."
-          rows={5}
+          minRows={8}
           className="textarea"
           required={true}
           value={note.content}
           onChange={onChange("content")}
         />
-
         <button className="add-button" onClick={handleNoteAdd}>
-          Añadir
+          {buttonText}
         </button>
       </div>
     </div>

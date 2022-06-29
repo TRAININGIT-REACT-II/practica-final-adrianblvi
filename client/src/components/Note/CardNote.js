@@ -9,10 +9,9 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import DeleteNoteDialog from "./DeleteNoteDialog";
 import { format, parseISO } from "date-fns";
-import AuthService from "../../services/authService";
 import "../../../static/css/note.css";
 
-const CardNote = ({ note, onClick }) => {
+const CardNote = ({ note }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const history = useHistory();
@@ -30,12 +29,18 @@ const CardNote = ({ note, onClick }) => {
   const date = format(parseISO(note.createdAt), "dd/MM/yyyy");
 
   const details = note.content;
+
   const detailsSliced =
     details.length > 200 ? details.slice(0, 200) + "  ..." : details;
+
   const detailsToShow = showDetails ? details : detailsSliced;
 
   const handleShowDetails = () => {
     setShowDetails(!showDetails);
+  };
+
+  const confirmModal = () => {
+    closeModal();
   };
 
   return (
@@ -59,7 +64,7 @@ const CardNote = ({ note, onClick }) => {
         <DeleteNoteDialog
           show={showModal}
           onClose={closeModal}
-          onClick={onClick}
+          onClick={confirmModal}
         />
         <CardContent>
           <div onClick={handleShowDetails}>

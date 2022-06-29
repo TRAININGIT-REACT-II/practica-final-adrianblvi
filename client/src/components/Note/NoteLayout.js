@@ -45,29 +45,6 @@ const NoteLayoutChange = () => {
       .catch((err) => console.error(err));
   };
 
-  const confirmModal = () => {
-    // closeModal();
-    console.log("jdfhkjsdf");
-    // fetch("/api/notes/" + note.id, {
-    //   method: "DELETE",
-
-    //   headers: {
-    //     "api-token": AuthService.getCurrentUser(),
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     if (json.error) {
-    //       console.log(json.error);
-    //     }
-    //     console.log(onDelete);
-    //     onDelete;
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-  };
-
   return (
     <NoteLayout.Provider value={{ current: layout, updateLayout: setLayout }}>
       <Grid
@@ -84,7 +61,7 @@ const NoteLayoutChange = () => {
           <ToggleNoteLayout />
         </Grid>
 
-        {displayGrid && <GridMap notes={notes} onClick={confirmModal} />}
+        {displayGrid && <GridMap notes={notes} />}
         {displayList && <ListMap notes={notes} />}
 
         <Grid item xs={2} sm={4} md={4}></Grid>

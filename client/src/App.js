@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 // Vistas importadas
@@ -30,12 +30,13 @@ const App = () => {
             <PrivateRoute path="/" exact>
               <NoteLayoutChange />
             </PrivateRoute>
-            <Route path="/new">
+            <PrivateRoute path="/new">
               <NewNote />
-            </Route>
-            {/* <Route path="/:name([a-zA-Z]*">
+            </PrivateRoute>
+            {/* <Route path="/:id([a-zA-Z]*"> */}
+            <PrivateRoute path="/:id">
               <NewNote />
-            </Route> */}
+            </PrivateRoute>
             <Route path="/login">
               <Login />
             </Route>
