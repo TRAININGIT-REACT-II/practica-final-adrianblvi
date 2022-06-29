@@ -27,6 +27,12 @@ const App = () => {
         <Router>
           <NavBar />
           <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
             <PrivateRoute path="/" exact>
               <NoteLayoutChange />
             </PrivateRoute>
@@ -37,12 +43,7 @@ const App = () => {
             <PrivateRoute path="/:id">
               <NewNote />
             </PrivateRoute>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
+
             <Route path="*">
               <NotFound />
             </Route>
