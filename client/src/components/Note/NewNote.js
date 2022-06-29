@@ -26,11 +26,8 @@ const NewNote = () => {
   };
 
   useEffect(() => {
-    if (noteReceived === undefined) {
-      console.log("nueva nota");
-    } else {
+    if (noteReceived != undefined) {
       if (id === noteReceived.id) {
-        console.log("Editando nota");
         setEditing(true);
         setNote(noteReceived);
       }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -14,7 +14,26 @@ import "../../../static/css/note.css";
 const CardNote = ({ note }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [date, setDate] = useState(null);
+
+  useEffect(() => {
+    if (note != undefined) {
+      if (note.createdAt != note.updatedAt) {
+        setDate(format(parseISO(note.updatedAt), "dd/MM/yyyy"));
+      } else {
+        setDate(format(parseISO(note.createdAt), "dd/MM/yyyy"));
+      }
+    }
+  }, []);
+
   const history = useHistory();
+
+  const details = note.content;
+
+  const detailsSliced =
+    details.length > 200 ? details.slice(0, 200) + "  ..." : details;
+
+  const detailsToShow = showDetails ? details : detailsSliced;
 
   const openModal = () => setShowModal(true);
 
@@ -25,15 +44,6 @@ const CardNote = ({ note }) => {
   const editNote = () => {
     history.push("/" + note.id, { note: note });
   };
-
-  const date = format(parseISO(note.createdAt), "dd/MM/yyyy");
-
-  const details = note.content;
-
-  const detailsSliced =
-    details.length > 200 ? details.slice(0, 200) + "  ..." : details;
-
-  const detailsToShow = showDetails ? details : detailsSliced;
 
   const handleShowDetails = () => {
     setShowDetails(!showDetails);
