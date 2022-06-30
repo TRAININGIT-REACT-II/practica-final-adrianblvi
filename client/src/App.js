@@ -39,7 +39,6 @@ const App = () => {
             <PrivateRoute path="/new">
               <NewNote />
             </PrivateRoute>
-            {/* <Route path="/:id([a-zA-Z]*"> */}
             <PrivateRoute path="/:id">
               <NewNote />
             </PrivateRoute>
