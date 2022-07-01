@@ -123,7 +123,7 @@ const NoteLayoutChange = () => {
 
   return (
     <NoteLayout.Provider value={{ current: layout, updateLayout: setLayout }}>
-      <SortContext.Provider value={{ sort: sort, update: setSort }}>
+      <SortContext.Provider value={{ current: sort, update: setSort }}>
         <SortByContext.Provider value={{ sort: sortBy, updateBy: setSortBy }}>
           <SortOrderContext.Provider
             value={{ sortOrder: sortOrder, updateOrder: setSortOrder }}

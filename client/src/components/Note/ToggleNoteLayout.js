@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
 import { NOTES_LAYOUT } from "../../constants/notesLayout";
 import NoteLayout from "../../contexts/noteLayout";
@@ -28,7 +28,7 @@ const ToggleNoteLayout = () => {
 
   // Sort notes by
   const sortContext = useContext(SortContext);
-  const [sort, setSort] = useState(sortContext.current);
+  // const [sort, setSort] = useState(SortContext.current);
 
   const sortBy = useContext(SortByContext);
   const sortOrderContext = useContext(SortOrderContext);
@@ -42,6 +42,10 @@ const ToggleNoteLayout = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   let history = useHistory();
+
+  useEffect(() => {
+    console.log("current", sortContext.current);
+  }, []);
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment != null) {
@@ -88,8 +92,7 @@ const ToggleNoteLayout = () => {
       setArrow("up");
     }
 
-    setSort(!sort);
-    sortContext.update(sort);
+    sortContext.update(!sortContext.current);
     setSelectedIndex(index);
   };
 
