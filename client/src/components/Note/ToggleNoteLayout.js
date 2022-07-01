@@ -28,7 +28,6 @@ const ToggleNoteLayout = () => {
 
   // Sort notes by
   const sortContext = useContext(SortContext);
-  // const [sort, setSort] = useState(SortContext.current);
 
   const sortBy = useContext(SortByContext);
   const sortOrderContext = useContext(SortOrderContext);
@@ -45,7 +44,7 @@ const ToggleNoteLayout = () => {
 
   useEffect(() => {
     console.log("current", sortContext.current);
-  }, []);
+  }, [sortContext.current]);
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment != null) {
@@ -83,16 +82,23 @@ const ToggleNoteLayout = () => {
       // cambiamos none por up y up por down
       if (arrow === "up") {
         setArrow("down");
+        sortContext.update(true);
+        console.log("Arrow updated to down");
       } else if (arrow === "down") {
         setArrow("none");
+        sortContext.update(false);
+        console.log("Arrow updated to none");
       } else {
         setArrow("up");
+        sortContext.update(true);
+        console.log("Arrow updated to up");
       }
     } else {
       setArrow("up");
+      sortContext.update(true);
+      console.log("Arrow updated to up 1");
     }
 
-    sortContext.update(!sortContext.current);
     setSelectedIndex(index);
   };
 
