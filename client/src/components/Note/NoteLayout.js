@@ -31,8 +31,8 @@ const NoteLayoutChange = () => {
   const [sortOrder, setSortOrder] = useState(sortOrderContext.sortOrder);
 
   useEffect(() => {
-    console.log("Sorting state has changed...", sort);
-  }, [sort]);
+    console.log("Sorting state has changed...", sort, sortBy, sortOrder);
+  }, [sort, sortBy, sortOrder]);
 
   useEffect(() => {
     getNotes();
@@ -124,9 +124,11 @@ const NoteLayoutChange = () => {
   return (
     <NoteLayout.Provider value={{ current: layout, updateLayout: setLayout }}>
       <SortContext.Provider value={{ current: sort, update: setSort }}>
-        <SortByContext.Provider value={{ sort: sortBy, updateBy: setSortBy }}>
+        <SortByContext.Provider
+          value={{ current: sortBy, updateBy: setSortBy }}
+        >
           <SortOrderContext.Provider
-            value={{ sortOrder: sortOrder, updateOrder: setSortOrder }}
+            value={{ current: sortOrder, updateOrder: setSortOrder }}
           >
             <Grid
               container

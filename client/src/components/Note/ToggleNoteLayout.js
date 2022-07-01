@@ -28,10 +28,8 @@ const ToggleNoteLayout = () => {
 
   // Sort notes by
   const sortContext = useContext(SortContext);
-
-  const sortBy = useContext(SortByContext);
+  const sortByContext = useContext(SortByContext);
   const sortOrderContext = useContext(SortOrderContext);
-  const [sortOrder, setSortOrder] = useState(sortOrderContext);
 
   const [alignment, setAlignment] = useState("center");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -43,7 +41,12 @@ const ToggleNoteLayout = () => {
   let history = useHistory();
 
   useEffect(() => {
-    console.log("current", sortContext.current);
+    console.log(
+      "Sorting algorithm: ",
+      sortContext.current,
+      SortByContext.current,
+      sortOrderContext.current
+    );
   }, [sortContext.current]);
 
   const handleAlignment = (event, newAlignment) => {
@@ -83,6 +86,7 @@ const ToggleNoteLayout = () => {
       if (arrow === "up") {
         setArrow("down");
         sortContext.update(true);
+        sortOrderContext.updateOrder("desc");
         console.log("Arrow updated to down");
       } else if (arrow === "down") {
         setArrow("none");
@@ -90,12 +94,14 @@ const ToggleNoteLayout = () => {
         console.log("Arrow updated to none");
       } else {
         setArrow("up");
+        sortOrderContext.updateOrder("asc");
         sortContext.update(true);
         console.log("Arrow updated to up");
       }
     } else {
       setArrow("up");
       sortContext.update(true);
+      sortOrderContext.updateOrder("asc");
       console.log("Arrow updated to up 1");
     }
 
