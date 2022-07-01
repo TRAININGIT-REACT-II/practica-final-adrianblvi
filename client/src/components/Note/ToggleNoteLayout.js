@@ -44,7 +44,7 @@ const ToggleNoteLayout = () => {
     console.log(
       "Sorting algorithm: ",
       sortContext.current,
-      SortByContext.current,
+      sortByContext.current,
       sortOrderContext.current
     );
   }, [sortContext.current]);
@@ -106,6 +106,7 @@ const ToggleNoteLayout = () => {
     }
 
     setSelectedIndex(index);
+    sortByContext.updateBy(options[index]);
   };
 
   return (
