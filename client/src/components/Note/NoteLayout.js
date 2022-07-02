@@ -31,12 +31,13 @@ const NoteLayoutChange = () => {
   const [sortOrder, setSortOrder] = useState(sortOrderContext.sortOrder);
 
   useEffect(() => {
-    console.log("Sorting state has changed...", sort, sortBy, sortOrder);
-  }, [sort, sortBy, sortOrder]);
-
-  useEffect(() => {
     getNotes();
   }, []);
+
+  useEffect(() => {
+    console.log("Current:", vista.current);
+    console.log("layout:", layout);
+  }, [layout]);
 
   useEffect(() => {
     if (notes.length === 0) {
@@ -57,67 +58,57 @@ const NoteLayoutChange = () => {
       .then((json) => {
         const notesBD = json;
         setNotes(notesBD);
+        // setUnsortedNotes(notesBD);
       })
       .catch((err) => console.error(err));
   };
 
-  const compareTitles = (a, b) => {
-    if (sort.sortOrder === "up") {
-      if (a.title < b.title) {
-        return -1;
+  const sortNotes = () => {
+    if (sort) {
+      console.log("_Notes sorted by: " + sortBy);
+      if (sortBy === "title") {
+        if (sortOrder === "asc") {
+          setNotes(
+            notes.sort((a, b) =>
+              a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+            )
+          );
+        } else if (sortOrder === "desc") {
+          setNotes(
+            notes.sort((a, b) =>
+              b.title > a.title ? 1 : a.title > b.title ? -1 : 0
+            )
+          );
+        }
+      } else if (sortBy === "updated") {
+        if (sortOrder === "asc") {
+          setNotes(
+            notes.sort((a, b) =>
+              a.updatedAt > b.updatedAt ? 1 : b.updatedAt > a.updatedAt ? -1 : 0
+            )
+          );
+        } else if (sortOrder === "desc") {
+          setNotes(
+            notes.sort((a, b) =>
+              b.updatedAt > a.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0
+            )
+          );
+        }
+      } else if (sortBy === "created") {
+        if (sortOrder === "asc") {
+          setNotes(
+            notes.sort((a, b) =>
+              a.createdAt > b.createdAt ? 1 : b.createdAt > a.createdAt ? -1 : 0
+            )
+          );
+        } else if (sortOrder === "desc") {
+          setNotes(
+            notes.sort((a, b) =>
+              b.createdAt > a.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0
+            )
+          );
+        }
       }
-      if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    } else if (sort.sortOrder === "down") {
-      if (a.title < b.title) {
-        return 1;
-      }
-      if (a.title > b.title) {
-        return -1;
-      }
-      return 0;
-    }
-  };
-
-  const compareUpdatedDate = (a, b) => {
-    if (sort.sortOrder === "up") {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    } else if (sort.sortOrder === "down") {
-      if (a.title < b.title) {
-        return 1;
-      }
-      if (a.title > b.title) {
-        return -1;
-      }
-      return 0;
-    }
-  };
-
-  const compareCreatedDate = (a, b) => {
-    if (sort.sortOrder === "up") {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      }
-      return 0;
-    } else if (sort.sortOrder === "down") {
-      if (a.title < b.title) {
-        return 1;
-      }
-      if (a.title > b.title) {
-        return -1;
-      }
-      return 0;
     }
   };
 

@@ -9,6 +9,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import DeleteNoteDialog from "./DeleteNoteDialog";
 import { format, parseISO } from "date-fns";
+import AuthService from "../../services/authService";
 import "../../../static/css/note.css";
 
 const CardNote = ({ note }) => {
@@ -51,6 +52,18 @@ const CardNote = ({ note }) => {
 
   const confirmModal = () => {
     closeModal();
+    fetch("api/notes/" + note.id, {
+      method: "DELETE",
+      headers: {
+        "api-token": AuthService.getCurrentUser(),
+      },
+    })
+      .then(() => {
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (

@@ -25,6 +25,7 @@ import "../../../static/css/note.css";
 
 const ToggleNoteLayout = () => {
   const options = ["Título", "Fecha actualización", "Fecha creación"];
+  const simpleOptions = ["title", "updated", "created"];
 
   // Sort notes by
   const sortContext = useContext(SortContext);
@@ -39,15 +40,6 @@ const ToggleNoteLayout = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   let history = useHistory();
-
-  useEffect(() => {
-    console.log(
-      "Sorting algorithm: ",
-      sortContext.current,
-      sortByContext.current,
-      sortOrderContext.current
-    );
-  }, [sortContext.current]);
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment != null) {
@@ -87,26 +79,22 @@ const ToggleNoteLayout = () => {
         setArrow("down");
         sortContext.update(true);
         sortOrderContext.updateOrder("desc");
-        console.log("Arrow updated to down");
       } else if (arrow === "down") {
         setArrow("none");
         sortContext.update(false);
-        console.log("Arrow updated to none");
       } else {
         setArrow("up");
         sortOrderContext.updateOrder("asc");
         sortContext.update(true);
-        console.log("Arrow updated to up");
       }
     } else {
       setArrow("up");
       sortContext.update(true);
       sortOrderContext.updateOrder("asc");
-      console.log("Arrow updated to up 1");
     }
 
     setSelectedIndex(index);
-    sortByContext.updateBy(options[index]);
+    sortByContext.updateBy(simpleOptions[index]);
   };
 
   return (

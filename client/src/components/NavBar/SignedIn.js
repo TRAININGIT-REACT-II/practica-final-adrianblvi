@@ -11,12 +11,11 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import UserContext from "../../contexts/userContext";
-import NameContext from "../../contexts/nameContext";
 import AuthService from "../../services/authService";
 
 const SignedIn = () => {
   // const { name } = useContext(NameContext);
-  const name = "Adrian";
+
   const user = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const history = useHistory();
@@ -40,7 +39,7 @@ const SignedIn = () => {
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <PersonIcon />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          {name}
+          {/* {name} */}
         </IconButton>
       </Tooltip>
       <Menu
