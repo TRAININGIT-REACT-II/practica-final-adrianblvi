@@ -33,6 +33,9 @@ const App = () => {
             <Route path="/signup">
               <Signup />
             </Route>
+            <Route path="/notfound" exact>
+              <NotFound />
+            </Route>
             <PrivateRoute path="/" exact>
               <NoteLayoutChange />
             </PrivateRoute>
@@ -42,7 +45,6 @@ const App = () => {
             <PrivateRoute path="/:id">
               <NewNote />
             </PrivateRoute>
-
             <Route path="*">
               <NotFound />
             </Route>

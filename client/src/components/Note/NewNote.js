@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, render } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { NOTE_STATE } from "../../constants/noteState";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -31,6 +31,9 @@ const NewNote = () => {
         setEditing(true);
         setNote(noteReceived);
       }
+    } else if (id != "new") {
+      console.log("Note received not found");
+      history.push("/notfound");
     }
   }, []);
 
