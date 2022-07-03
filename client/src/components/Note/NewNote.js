@@ -31,7 +31,7 @@ const NewNote = () => {
         setEditing(true);
         setNote(noteReceived);
       }
-    } else if (id != "new") {
+    } else if (id != undefined) {
       console.log("Note received not found");
       history.push("/notfound");
     }
